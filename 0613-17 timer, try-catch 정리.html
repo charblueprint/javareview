@@ -1,0 +1,63 @@
+<h2>try - catch문 (예외 처리 기능 문법)</h2>
+<blockquote>
+<p><strong>try - catch문</strong>은 <strong>예외 발생할 코드를 적용</strong>해 사용합니다.<br>
+(1부터 10까지 1초 간격으로 try-catch문를 적용해 미지수 i를 출력하는 코드를 작성해보았습니다.)</p>
+</blockquote>
+<pre><code class="language-java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">time1</span> </span>{
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> </span>{
+        <span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>;
+            do {
+                <span class="hljs-keyword">try</span> { 
+                    Thread.sleep(<span class="hljs-number">1000</span>); 
+                } <span class="hljs-keyword">catch</span> (InterruptedException e) {
+                }
+                System.out.println(i);              
+                i++;
+            } <span class="hljs-keyword">while</span> (i&lt;=<span class="hljs-number">10</span>);
+     }
+
+}
+</code></pre>
+<p><strong>Thread.sleep();</strong> 메소드는 <em>일시정지 상태</em>를 의미합니다. 여기서 1000은 1초를 의미합니다. 즉, 100은 0.1초를 의미합니다.</p>
+<hr>
+<blockquote>
+<p>자주 일어나는 예외 모음</p>
+</blockquote>
+<ul>
+<li>InterruptedException : 해당 예외 발생이 되었을 경우 처리하기 위한 문법</li>
+<li>ArrayIndexOutOfBoundsException : 해당 인덱스의 범위를 벗어났을 때</li>
+<li>NumberFormatException : 문자열로 되어있는 데이터를 숫자로 변경하는 경우</li>
+<li>ClassCastException : 억지로 타입변환을 시도할 경우<br>
+(+) 타입 변환(Casting)은 상위 클래스와 하위 클래스간에 발생하고 구현 클래스와 인터페이스 간에도 발생한다.
+이러한 관계가 아니라면 클래스는 다른 클래스를 타입으로 변환할 수 없다.</li>
+</ul>
+<h2>Time util을 활용해 시간함수 활용</h2>
+<blockquote>
+<p><strong>timer.scheduleAtFixedRate</strong>(new gogo(), 0, 5000); =&gt; <strong>(시작할 메소드/클래스, 몇 초뒤에 시작할 지, 반복 시간)</strong>   <strong>scheduleAtFixedRate</strong> : 지속적으로 반복 작업을 할 때
+TimerTask는 배너나 로딩화면을 실행 할 때 사용한다.<br>
+(adata에 해당하는 4개의 자료들을 4.5초 간격으로 출력하는 코드를 작성하였습니다.)</p>
+</blockquote>
+<pre><code class="language-java"><span class="hljs-keyword">import</span> java.util.Timer;
+<span class="hljs-keyword">import</span> java.util.TimerTask;
+
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">time2</span>  </span>{
+    
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> </span>{
+        Timer timer = <span class="hljs-keyword">new</span> Timer(); 
+        TimerTask TT = <span class="hljs-keyword">new</span> TimerTask() { 
+            <span class="hljs-keyword">int</span> a = <span class="hljs-number">0</span>;
+            String adata[] = {<span class="hljs-string">"홍길동"</span>,<span class="hljs-string">"이순신"</span>,<span class="hljs-string">"강감찬"</span>,<span class="hljs-string">"유관순"</span>};
+            <span class="hljs-annotation">@Override</span>
+            <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">run</span><span class="hljs-params">()</span> </span>{ <span class="hljs-comment">//Task에서 실행하는 메소드입니다.</span>
+                <span class="hljs-keyword">if</span>(a&gt;=<span class="hljs-number">4</span>) { <span class="hljs-comment">//4바퀴를 돌았을때 a를 0으로 돌려놓아 처음부터 다시 실행되도록 합니다.</span>
+                    a = <span class="hljs-number">0</span>; 
+                }
+                System.out.println(adata[a]);
+                a++;
+            }
+        };
+        timer.scheduleAtFixedRate(TT, <span class="hljs-number">0</span>, <span class="hljs-number">4500</span>);
+    }   
+}
+</code></pre>
